@@ -1,15 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import * as Sentry from '@sentry/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 
-//Components
+// Components
 import { AppComponent } from './app.component';
 
-//Modules
+// Modules
 import { AuthenticationModule } from './authentication/authentication.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthInterceptor } from './authentication/interceptors/auth.interceptor';
+import { CacheInterceptor } from './shared/interceptors/cache.interceptor';
+import { LogInterceptor } from './shared/interceptors/log.interceptor';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,10 @@ import { SharedModule } from './shared/shared.module';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LogInterceptor, multi: true },
+    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: true }) },
+    { provide: Sentry.TraceService, deps: [Router]},
+    { provide: APP_INITIALIZER, useFactory: () => () => {}, deps: [Sentry.TraceService], multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 
-export function GenerateRoutes(apiUrl: string) {
+export function GenerateRoutes(apiUrl: string): any {
     return {
         baseUrl: apiUrl,
 
