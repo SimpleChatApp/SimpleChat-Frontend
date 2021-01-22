@@ -8,7 +8,7 @@ import {
     HttpResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthenticationData } from '../models/authentication-data-model';
+import { AuthenticationDataModel } from '../models/authentication-data-model';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -16,11 +16,11 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    private authData: AuthenticationData;
+    private authData: AuthenticationDataModel;
 
     constructor(private authService: AuthenticationService,
                 private router: Router) {
-        this.authData = {} as AuthenticationData;
+        this.authData = {} as AuthenticationDataModel;
         this.authService.authenticationData$.subscribe(s => this.authData = s);
     }
 
@@ -43,7 +43,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         return next.handle(modifiedRequest)
             .pipe(
-                tap(event => {
+                tap((event: any) => {
                     if (event instanceof HttpResponse) {
                         if (event.status === 401) {
 

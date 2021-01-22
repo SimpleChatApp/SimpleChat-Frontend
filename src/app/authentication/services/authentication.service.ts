@@ -1,29 +1,31 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { AuthenticationData } from '../models/authentication-data-model';
+import { BaseService } from 'src/app/shared/services/base.service';
+import { AuthenticationDataModel } from '../models/authentication-data-model';
 import { LoginModel } from '../models/login.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService extends BaseService {
 
-  public authenticationData$: Observable<AuthenticationData>;
+  public authenticationData$: Observable<AuthenticationDataModel>;
 
   private authenticationDataSubject: BehaviorSubject<any>;
 
-  private authData: AuthenticationData | null = null;
+  private authData: AuthenticationDataModel | null = null;
 
   constructor(
-    private http: HttpClient) {
-    this.authenticationDataSubject = new BehaviorSubject<AuthenticationData>({} as AuthenticationData);
-    this.authenticationData$ = this.authenticationDataSubject.asObservable();
+    protected http: HttpClient) {
+      super(http);
+      this.authenticationDataSubject = new BehaviorSubject<AuthenticationDataModel>({} as AuthenticationDataModel);
+      this.authenticationData$ = this.authenticationDataSubject.asObservable();
   }
 
   public login(loginModel: LoginModel): Observable<boolean> {
 
-    this.authData = {} as AuthenticationData;
+    this.authData = {} as AuthenticationDataModel;
     this.authenticationDataSubject.next(this.authData);
 
     const reqHeaders = new HttpHeaders({ 'dont-authenticate': '', 'dont-cache': '' });

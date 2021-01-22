@@ -2,11 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { secureEnvironment } from './environment-secure';
+
 export const environment = {
-  production: false,
-  API_PATH: '',
-  SENTRY_DSN: '',
-  API_VER: ''
+    production: false,
+    API_PATH: secureEnvironment.API_PATH,
+    SENTRY_DSN: secureEnvironment.SENTRY_DSN,
+    API_VER: secureEnvironment.API_VER
 };
 
 /*

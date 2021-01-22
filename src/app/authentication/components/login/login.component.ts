@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginModel } from '../../models/login.model';
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
+import { AuthenticationDataModel } from '../../models/authentication-data-model';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.subscription = this.authService.authenticationData$.subscribe(data => {
+    this.subscription = this.authService.authenticationData$.subscribe((data: AuthenticationDataModel) => {
       if (data) {
         this.showNavbar = false;
       } else {
@@ -59,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       data.userName = data.userName.replace(/\s/g, '');
       data.password = data.password.replace(/\s/g, '');
 
-      this.authService.login(data).subscribe(result => {
+      this.authService.login(data).subscribe((result: boolean) => {
         if (result) {
           this.router.navigate(['/dashboard']);
         } else {

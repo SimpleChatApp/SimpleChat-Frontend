@@ -1,4 +1,6 @@
-export interface BaseModel<T> {
+import { IDType } from '../types/id-type';
+
+export interface BaseModel<T extends IDType> {
     id: T;
 }
 
