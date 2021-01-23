@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as Sentry from '@sentry/angular';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { AuthInterceptor } from './authentication/interceptors/auth.interceptor'
 import { CacheInterceptor } from './shared/interceptors/cache.interceptor';
 import { LogInterceptor } from './shared/interceptors/log.interceptor';
 import { Router } from '@angular/router';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { Router } from '@angular/router';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule, // required animations module for toaster
+    ToastrModule.forRoot(),
     HttpClientModule,
     AuthenticationModule,
     SharedModule
