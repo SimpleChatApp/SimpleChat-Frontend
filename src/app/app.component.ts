@@ -1,5 +1,4 @@
 import { AfterContentInit, Component } from '@angular/core';
-import { MessageDialogService } from './shared/services/message-dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +7,7 @@ import { MessageDialogService } from './shared/services/message-dialog.service';
 })
 export class AppComponent implements AfterContentInit {
 
-  constructor(private msg: MessageDialogService) {
+  constructor() {
   }
 
   ngAfterContentInit(): void{
