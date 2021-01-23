@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { AuthenticationDataModel } from '../models/authentication-data-model';
 import { LoginModel } from '../models/login.model';
@@ -12,14 +12,14 @@ export class AuthenticationService extends BaseService {
 
   public authenticationData$: Observable<AuthenticationDataModel>;
 
-  private authenticationDataSubject: BehaviorSubject<any>;
+  private authenticationDataSubject: Subject<any>;
 
   private authData: AuthenticationDataModel | null = null;
 
   constructor(
     protected http: HttpClient) {
       super(http);
-      this.authenticationDataSubject = new BehaviorSubject<AuthenticationDataModel>({} as AuthenticationDataModel);
+      this.authenticationDataSubject = new Subject<AuthenticationDataModel>();
       this.authenticationData$ = this.authenticationDataSubject.asObservable();
   }
 

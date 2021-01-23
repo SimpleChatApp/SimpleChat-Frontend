@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthenticationDataModel } from 'src/app/authentication/models/authentication-data-model';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -11,12 +12,15 @@ import { AuthenticationService } from 'src/app/authentication/services/authentic
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  showNavbar;
+  public title: string;
+  public showNavbar: boolean;
+  public userName: string;
+
   private authDataSubscription: Subscription;
-  public userName;
 
   constructor(private authService: AuthenticationService,
               private router: Router) {
+    this.title = environment.Title;
     this.authDataSubscription = new Subscription();
     this.userName = '';
     this.showNavbar = false;
@@ -32,8 +36,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.userName = data.displayName;
       }
     });
-
-    throw new Error("asdasdasdad");
   }
 
   ngOnDestroy(): void{
@@ -42,7 +44,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logout(): void{
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
 }

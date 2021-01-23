@@ -1,36 +1,36 @@
-<nav *ngIf="showNavbar" class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary bg-faded justify-content-center">
-    <a class="navbar-brand d-flex w-50 mr-auto" routerLink="">Progress
-        <span> - [{{userName}}]</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse w-100" id="collapsingNavbar">
-        <ul class="navbar-nav w-100 justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link" role="button" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-            </li>
+<ng-container *ngIf="showNavbar; else emptyNavBar">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary bg-faded justify-content-center">
+        <a class="navbar-brand d-flex w-50 mr-auto" routerLink="">{{title}}
+            <span> - [{{userName}}]</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100" id="collapsingNavbar">
+            <ul class="navbar-nav w-100 justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" role="button" routerLink="/chat/rooms" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Chat Rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" role="button" routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Users</a>
+                </li>
+            </ul>
 
-            <li class="nav-item">
-                <a class="nav-link" role="button" routerLink="/products" routerLinkActive="active">Products</a>
-            </li>
+            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" role="button" routerLink="/users/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" role="button" (click)="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</ng-container>
+<ng-template #emptyNavBar>
+    <nav class="navbar navbar-dark bg-primary">
+        <span class="navbar-brand mb-0 h1">{{title}}</span>
+    </nav>
+</ng-template>
 
-            <li class="nav-item">
-                <a class="nav-link" role="button" routerLink="/customers" routerLinkActive="active">Customers</a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" role="button" routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Users</a>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" role="button" routerLink="/users/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" role="button" (click)="logout()">Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>

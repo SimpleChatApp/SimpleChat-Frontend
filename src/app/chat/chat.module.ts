@@ -7,10 +7,11 @@ import { ChatRoomDetailComponent } from './components/chat-room-detail/chat-room
 import { ChatControlsComponent } from './components/chat-controls/chat-controls.component';
 import { ChatMessagesComponent } from './components/chat-messages/chat-messages.component';
 import { ChatRoomEditComponent } from './components/chat-room-edit/chat-room-edit.component';
+import { ChatMainComponent } from './components/chat-main/chat-main.component';
 
 
 @NgModule({
-  declarations: [ChatRoomListComponent, ChatRoomDetailComponent, ChatControlsComponent, ChatMessagesComponent, ChatRoomEditComponent],
+  declarations: [ChatRoomListComponent, ChatRoomDetailComponent, ChatControlsComponent, ChatMessagesComponent, ChatRoomEditComponent, ChatMainComponent],
   imports: [
     CommonModule,
     ChatRoutingModule

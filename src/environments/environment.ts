@@ -8,7 +8,8 @@ export const environment = {
     production: false,
     API_PATH: secureEnvironment.API_PATH,
     SENTRY_DSN: secureEnvironment.SENTRY_DSN,
-    API_VER: secureEnvironment.API_VER
+    API_VER: secureEnvironment.API_VER,
+    Title: 'Simple Chat'
 };
 
 /*

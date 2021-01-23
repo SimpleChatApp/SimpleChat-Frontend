@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: ':key', component: SearchResultsComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
