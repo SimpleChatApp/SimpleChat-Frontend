@@ -12,6 +12,7 @@ import { AuthenticationDataModel } from '../models/authentication-data-model';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -47,10 +48,10 @@ export class AuthInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
                         if (event.status === 401) {
 
-                            //refresh token request
+                            // TODO: refresh token request
 
                             this.authService.logout();
-                            this.router.navigate(['/login']);
+                            this.router.navigate([environment.APP_ROUTES.auth.login]);
                         }
                     }
                 })

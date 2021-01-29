@@ -6,4 +6,5 @@ export interface RegisterModel {
 
     displayName: string;
     about: string;
+    email: string;
 }

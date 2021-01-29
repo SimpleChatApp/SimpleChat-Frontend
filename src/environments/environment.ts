@@ -2,6 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { GenerateAPIRoutes } from './api-endpoints';
+import { GenerateAppRoutes } from './app-routes';
 import { secureEnvironment } from './environment-secure';
 
 export const environment = {
@@ -9,7 +11,9 @@ export const environment = {
     API_PATH: secureEnvironment.API_PATH,
     SENTRY_DSN: secureEnvironment.SENTRY_DSN,
     API_VER: secureEnvironment.API_VER,
-    Title: 'Simple Chat'
+    TITLE: 'Simple Chat',
+    API_ROUTES: GenerateAPIRoutes(secureEnvironment.API_PATH),
+    APP_ROUTES: GenerateAppRoutes()
 };
 
 /*

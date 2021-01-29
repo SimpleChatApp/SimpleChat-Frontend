@@ -21,7 +21,7 @@ Sentry.init({
     }),
   ],
 
-  tracesSampleRate: 1.0,
+  tracesSampleRate: 1.0
 });
 
 platformBrowserDynamic().bootstrapModule(AppModule)

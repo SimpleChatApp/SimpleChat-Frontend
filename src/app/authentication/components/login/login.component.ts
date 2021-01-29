@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LoginModel } from '../../models/login.model';
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
 import { AuthenticationDataModel } from '../../models/authentication-data-model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   isSending = false;
 
-  showNavbar = false;
   private subscription: Subscription;
 
   constructor(
@@ -32,15 +32,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.authService.authenticationData$.subscribe((data: AuthenticationDataModel) => {
       if (data) {
-        this.showNavbar = false;
-      } else {
-        this.showNavbar = true;
+        // TODO: create a guard, if user data exist redirect to home screen
+        this.router.navigate([environment.APP_ROUTES.baseUrl]);
       }
     });
 
     this.loginForm = this.fb.group({
-      UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
-      PasswordHash: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
+      userName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
+      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
     });
   }
 
@@ -52,8 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm.markAllAsTouched();
     this.isSending = true;
 
-    // Trim fields
-
     if (this.loginForm.valid) {
       const data = (this.loginForm.value as LoginModel);
 
@@ -62,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       this.authService.login(data).subscribe((result: boolean) => {
         if (result) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate([environment.APP_ROUTES.baseUrl]);
         } else {
           this.msg.showError('Error!', 'Username or password is not correct!');
         }
@@ -72,5 +69,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.isSending = false;
+  }
+
+  public redirectToRegister(): void{
+    this.router.navigate([environment.APP_ROUTES.auth.register]);
   }
 }

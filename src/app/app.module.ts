@@ -3,6 +3,10 @@ import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as Sentry from '@sentry/angular';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,7 +33,14 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     HttpClientModule,
     AuthenticationModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: environment.TITLE +  ' App DevTools',
+      maxAge: 25,
+      logOnly: environment.production
+    }),
+    EffectsModule.forRoot([])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

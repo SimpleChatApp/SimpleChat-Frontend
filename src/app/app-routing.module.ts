@@ -5,7 +5,7 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 
 const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
-  { path: 'users', loadChildren: () => import('./user/user.module').then(m => m.UserModule), canActivate: [AuthGuard]},
+  { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule), canActivate: [AuthGuard]},
   { path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule), canActivate: [AuthGuard] },
   { path: 'search', loadChildren: () => import('./search/search.module').then(m => m.SearchModule), canActivate: [AuthGuard] },
   { path: 'shared', loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule) },

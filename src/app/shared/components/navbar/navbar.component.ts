@@ -20,21 +20,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthenticationService,
               private router: Router) {
-    this.title = environment.Title;
+    this.title = environment.TITLE;
     this.authDataSubscription = new Subscription();
     this.userName = '';
     this.showNavbar = false;
   }
 
   ngOnInit(): void {
-    this.authDataSubscription = this.authService.authenticationData$.subscribe((data: AuthenticationDataModel) => {
-      if (!data) {
-        this.showNavbar = false;
-        this.userName = '';
-      } else {
-        this.showNavbar = true;
-        this.userName = data.displayName;
-      }
+    this.authDataSubscription = this.authService.authenticationData$
+      .subscribe((data: AuthenticationDataModel) => {
+        if (!data) {
+          this.showNavbar = false;
+          this.userName = '';
+        } else {
+          this.showNavbar = true;
+          this.userName = data.displayName;
+        }
     });
   }
 
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logout(): void{
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate([environment.APP_ROUTES.auth.login]);
   }
 
 }
