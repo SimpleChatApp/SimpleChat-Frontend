@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import * as Sentry from '@sentry/angular';
 import { environment } from 'src/environments/environment';
 import { IDType } from '../types/id-type';
 import { QueryParamModel } from '../models/query-param-model';
+import { MessageDialogService } from './message-dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class BaseService<Key extends IDType> {
 
   protected path = '';
 
-  constructor(protected http: HttpClient) {
+  constructor(protected http: HttpClient,
+    protected msg: MessageDialogService) {
 
 }
 
@@ -61,7 +63,9 @@ export class BaseService<Key extends IDType> {
         // The response body may contain clues as to what went wrong,
       Sentry.captureException(error);
     }
-    // return an observable with a user-facing error message
-    return throwError('');
+
+    this.msg.showError('An error occured!',
+      'But don\'t worry about it, the developes will be informed about the error.')
+    return of();
   }
 }

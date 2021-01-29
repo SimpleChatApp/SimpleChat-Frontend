@@ -47,4 +47,3 @@ Thumbs.db
 src/environments/secure.env
 src/environments/environment-secure.ts
 .vscode/settings.json
-src/environments/environment-secure.env

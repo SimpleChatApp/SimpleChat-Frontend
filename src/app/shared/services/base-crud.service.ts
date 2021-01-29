@@ -9,6 +9,7 @@ import { UpdateModel } from '../models/update-model';
 import { BaseService } from './base.service';
 import { IDType } from '../types/id-type';
 import { environment } from 'src/environments/environment';
+import { MessageDialogService } from './message-dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,9 @@ export class BaseCRUDService<
   L extends BaseModel<Key>,
   Key extends IDType> extends BaseService<Key> {
 
-  constructor(protected http: HttpClient) {
-    super(http);
+  constructor(protected http: HttpClient,
+              protected msg: MessageDialogService) {
+    super(http, msg);
   }
 
   public getAll(): Observable<L[]> {

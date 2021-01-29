@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { APIResultModel } from 'src/app/shared/models/api-result-model';
 import { BaseService } from 'src/app/shared/services/base.service';
+import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
 import { environment } from 'src/environments/environment';
 import { AuthenticationDataModel } from '../models/authentication-data-model';
 import { IsUserExistModel } from '../models/is-user-exist-model';
@@ -21,9 +22,9 @@ export class AuthenticationService extends BaseService<string> {
 
   private authData: AuthenticationDataModel | null = null;
 
-  constructor(
-    protected http: HttpClient) {
-    super(http);
+  constructor(protected http: HttpClient,
+              protected msg: MessageDialogService) {
+    super(http, msg);
     this.authenticationDataSubject = new Subject<AuthenticationDataModel>();
     this.authenticationData$ = this.authenticationDataSubject.asObservable();
   }
