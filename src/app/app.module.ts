@@ -7,6 +7,8 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
+import { ToastrModule } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -16,11 +18,12 @@ import { AppComponent } from './app.component';
 // Modules
 import { AuthenticationModule } from './authentication/authentication.module';
 import { SharedModule } from './shared/shared.module';
+
+// Interceptors
 import { AuthInterceptor } from './authentication/interceptors/auth.interceptor';
-import { CacheInterceptor } from './shared/interceptors/cache.interceptor';
 import { LogInterceptor } from './shared/interceptors/log.interceptor';
-import { Router } from '@angular/router';
-import { ToastrModule } from 'ngx-toastr';
+import { CacheInterceptor } from './shared/interceptors/cache.interceptor';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,12 +46,13 @@ import { ToastrModule } from 'ngx-toastr';
     EffectsModule.forRoot([])
   ],
   providers: [
+    { provide: Sentry.TraceService, deps: [Router]},
+    { provide: APP_INITIALIZER, useFactory: () => () => { }, deps: [Sentry.TraceService], multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LogInterceptor, multi: true },
-    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: true }) },
-    { provide: Sentry.TraceService, deps: [Router]},
-    { provide: APP_INITIALIZER, useFactory: () => () => {}, deps: [Sentry.TraceService], multi: true }
+    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: true }) }
   ],
   bootstrap: [AppComponent]
 })

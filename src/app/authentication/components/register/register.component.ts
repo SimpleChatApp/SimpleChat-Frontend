@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
       const data = (this.registerForm.value as RegisterModel);
 
       this.authService.isUserExist(data.userName, data.email).subscribe(response => {
-        
+
         console.log(response);
 
         if (!response) {

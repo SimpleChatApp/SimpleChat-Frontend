@@ -15,57 +15,17 @@ export class BaseService<Key extends IDType> {
   protected path = '';
 
   constructor(protected http: HttpClient,
-    protected msg: MessageDialogService) {
+              protected msg: MessageDialogService) {
+  }
 
-}
-
-  // protected insertParametersToPath(path: string, params: QueryParamModel[]): string{
-  //   if (!path || path.length <= 0)
-  //   {
-  //     Sentry.captureException(throwError('URL_PATH is empty!'));
-  //     return '';
-  //   }
-
-  //   path = path.trim();
-
-  //   if (path.endsWith('/')) {
-  //     path = path.substring(0, path.length - 1);
-  //   }
-
-  //   path = path + '?';
-
-  //   params.forEach(param => {
-  //     path = param.name + '=' + param.value + '&';
-  //   });
-
-  //   path = path.substring(0, path.length - 1);
-
-  //   return path;
-  // }
-
-  protected convertIDToString(value: Key): string{
-    if (typeof(value) === 'string') {
+  protected convertIDToString(value: Key): string {
+    if (typeof (value) === 'string') {
       return value as string;
     }
-    if (typeof(value) === 'number') {
+    if (typeof (value) === 'number') {
       return (value as number).toString();
     }
 
     return '';
-  }
-
-  protected handleError(error: HttpErrorResponse): Observable<never>{
-    if (error.error instanceof ErrorEvent) {
-        // A client-side or network error occurred. Handle it accordingly.
-      Sentry.captureException(error);
-    } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong,
-      Sentry.captureException(error);
-    }
-
-    this.msg.showError('An error occured!',
-      'But don\'t worry about it, the developes will be informed about the error.')
-    return of();
   }
 }

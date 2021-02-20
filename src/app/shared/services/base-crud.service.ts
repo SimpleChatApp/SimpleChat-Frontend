@@ -27,40 +27,26 @@ export class BaseCRUDService<
 
   public getAll(): Observable<L[]> {
       return this.http.get<L[]>(this.path)
-        .pipe(map((data: L[]) => data),
-            catchError(this.handleError)
-        );
+        .pipe(map((data: L[]) => data));
   }
 
   public getById(id: Key): Observable<APIResultModel<Key> | L>{
-    return this.http.get<APIResultModel<Key> | L>(this.path + '/' + this.convertIDToString(id))
-      .pipe(tap(data => data),
-          catchError(this.handleError)
-      );
+    return this.http.get<APIResultModel<Key> | L>(this.path + '/' + this.convertIDToString(id));
   }
 
   public add(model: A): Observable<APIResultModel<Key>>{
-    return this.http.post<APIResultModel<Key>>(this.path, model)
-      .pipe(
-          catchError(this.handleError)
-      );
+    return this.http.post<APIResultModel<Key>>(this.path, model);
   }
 
   public update(model: U): Observable<APIResultModel<Key>>{
     const url = `${this.path}/${this.convertIDToString(model.id)}`;
 
-    return this.http.put<APIResultModel<Key>>(url, model)
-      .pipe(
-          catchError(this.handleError)
-      );
+    return this.http.put<APIResultModel<Key>>(url, model);
   }
 
   public Delete(id: Key): Observable<void>{
     const url = `${this.path}/${this.convertIDToString(id)}`;
 
-    return this.http.delete<void>(url)
-      .pipe(
-          catchError(this.handleError)
-      );
+    return this.http.delete<void>(url);
   }
 }
