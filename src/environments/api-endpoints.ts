@@ -4,7 +4,7 @@ export function GenerateAPIRoutes(host: string): APIRoutes{
     const authentications = apiUrl + '/authentications';
     const tokens = apiUrl + '/tokens';
     const searches = apiUrl + '/searches';
-    const chatrooms = apiUrl + '/chatrooms';
+    const chatRooms = apiUrl + '/chatrooms';
     const users = apiUrl + '/users';
     const messages = apiUrl + '/messages';
 
@@ -25,9 +25,9 @@ export function GenerateAPIRoutes(host: string): APIRoutes{
             baseUrl: searches
         },
         chatRoom: {
-            baseUrl: chatrooms,
-            messages: chatrooms + '/{id}/messages',
-            users: chatrooms + '/{id}/users',
+            baseUrl: chatRooms,
+            messages: chatRooms + '/{id}/messages',
+            users: chatRooms + '/{id}/users',
         },
         user: {
             baseUrl: users

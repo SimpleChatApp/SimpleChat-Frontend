@@ -22,7 +22,11 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthenticationService,
                 private router: Router) {
         this.authData = {} as AuthenticationDataModel;
-        this.authService.authenticationData$.subscribe(s => this.authData = s);
+        this.authService.authenticationData.subscribe(s => {
+            if (s && s.Data) {
+                this.authData = s.Data;
+            }
+        });
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

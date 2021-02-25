@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Subscription } from 'rxjs';
 import { AuthenticationDataModel } from 'src/app/authentication/models/authentication-data-model';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AuthState } from 'src/app/authentication/state/auth-reducer';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -27,14 +28,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authDataSubscription = this.authService.authenticationData$
-      .subscribe((data: AuthenticationDataModel) => {
-        if (!data) {
+    this.authDataSubscription = this.authService.authenticationData
+      .subscribe((state: AuthState) => {
+        if (state && state.IsAuthenticated) {
+          this.showNavbar = true;
+          this.userName = state.Data.displayName;
+        } else {
           this.showNavbar = false;
           this.userName = '';
-        } else {
-          this.showNavbar = true;
-          this.userName = data.displayName;
         }
     });
   }

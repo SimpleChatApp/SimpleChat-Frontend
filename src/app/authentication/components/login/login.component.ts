@@ -7,6 +7,7 @@ import { LoginModel } from '../../models/login.model';
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
 import { AuthenticationDataModel } from '../../models/authentication-data-model';
 import { environment } from 'src/environments/environment';
+import { AuthState } from '../../state/auth-reducer';
 
 @Component({
   selector: 'app-login',
@@ -30,8 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.subscription = this.authService.authenticationData$.subscribe((data: AuthenticationDataModel) => {
-      if (data) {
+    this.subscription = this.authService.authenticationData.subscribe((state: AuthState) => {
+      if (state && state.IsAuthenticated) {
         // TODO: create a guard, if user data exist redirect to home screen
         this.router.navigate([environment.APP_ROUTES.baseUrl]);
       }

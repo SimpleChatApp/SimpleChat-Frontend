@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { AuthenticationDataModel } from '../../models/authentication-data-model';
 import { RegisterModel } from '../../models/register-model';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AuthState } from '../../state/auth-reducer';
 
 @Component({
   selector: 'app-register',
@@ -31,8 +32,8 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void{
-    this.subscription = this.authService.authenticationData$.subscribe((data: AuthenticationDataModel) => {
-      if (data) {
+    this.subscription = this.authService.authenticationData.subscribe((state: AuthState) => {
+      if (state && state.IsAuthenticated) {
         // TODO: create a guard, if user data exist redirect to home screen
         this.router.navigate([environment.APP_ROUTES.baseUrl]);
       }

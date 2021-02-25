@@ -1,7 +1,7 @@
 
 export function GenerateAppRoutes(): any {
     return {
-        baseUrl: '',
+        baseUrl: '/',
         search: {
             baseUrl: '/search',
         },

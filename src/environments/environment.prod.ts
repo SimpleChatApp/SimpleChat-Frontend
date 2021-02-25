@@ -1,6 +1,6 @@
 import { GenerateAPIRoutes } from './api-endpoints';
 import { GenerateAppRoutes } from './app-routes';
-import { secureEnvironment } from './environment-secure.ts';
+import { secureEnvironment } from './environment-secure';
 
 export const environment = {
     production: false,

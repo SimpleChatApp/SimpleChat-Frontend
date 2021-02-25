@@ -5,13 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "firefox",
-            "request": "launch",
-            "reAttach": true,
-            "name": "Launch localhost",
-            "preLaunchTask": "npm: start",
-            "url": "http://localhost:4200",
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "urlFilter": "http://localhost:4200/*",
+            "request": "attach",
+            "type": "pwa-chrome",
             "webRoot": "${workspaceFolder}"
-        }
+        },
+        // {
+        //     "name": "Launch localhost",
+        //     "type": "firefox",
+        //     "request": "launch",
+        //     "reAttach": true,
+        //     "preLaunchTask": "npm: start",
+        //     "url": "http://localhost:4200",
+        //     "webRoot": "${workspaceFolder}"
+        // }
     ]
 }

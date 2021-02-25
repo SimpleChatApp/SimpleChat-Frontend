@@ -24,6 +24,7 @@ import { AuthInterceptor } from './authentication/interceptors/auth.interceptor'
 import { LogInterceptor } from './shared/interceptors/log.interceptor';
 import { CacheInterceptor } from './shared/interceptors/cache.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import * as AuthReducer from './authentication/state/auth-reducer';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     HttpClientModule,
     AuthenticationModule,
     SharedModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({
+      auth: AuthReducer.Reducer
+    }),
     StoreDevtoolsModule.instrument({
       name: environment.TITLE +  ' App DevTools',
       maxAge: 25,

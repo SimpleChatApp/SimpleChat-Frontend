@@ -13,13 +13,14 @@ import { LoginModel } from '../models/login.model';
 import { RegisterModel } from '../models/register-model';
 import * as AppState from 'src/app/state/app-state';
 import * as AuthActions from '../state/auth-actions';
+import { AuthState } from '../state/auth-reducer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService extends BaseService<string> {
 
-  public authenticationData: Observable<AuthenticationDataModel>;
+  public authenticationData: Observable<AuthState>;
 
   constructor(protected http: HttpClient,
               protected msg: MessageDialogService,
@@ -34,7 +35,7 @@ export class AuthenticationService extends BaseService<string> {
     return this.http.post<any>(environment.API_ROUTES.auth.createToken, loginModel,
       { headers: reqHeaders })
       .pipe(map(data => {
-          this.store.dispatch(new AuthActions.SetAuthData(data as AuthenticationDataModel));
+          this.store.dispatch(AuthActions.SetAuthData({payload: data}));
 
           return data; // true veya false donsun
         }));
@@ -42,9 +43,9 @@ export class AuthenticationService extends BaseService<string> {
 
   public logout(): void {
 
-    //revoke token
+    // revoke token
 
-    this.store.dispatch(new AuthActions.ClearAuthData());
+    this.store.dispatch(AuthActions.ClearAuthData());
   }
 
   public register(model: RegisterModel): Observable<boolean> {
@@ -53,7 +54,7 @@ export class AuthenticationService extends BaseService<string> {
     return this.http.post<any>(environment.API_ROUTES.auth.register, model,
       { headers: reqHeaders })
       .pipe(map(data => {
-          this.store.dispatch(new AuthActions.SetAuthData(data as AuthenticationDataModel));
+          this.store.dispatch(AuthActions.SetAuthData(data));
 
           return data; // true veya false donsun
         }));
